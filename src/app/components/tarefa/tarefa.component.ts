@@ -25,8 +25,6 @@ export class TarefaComponent implements OnInit {
   descricao: string = '';
   displayedColumns: string[] = ['id', 'pessoa', 'descricao', 'acoes'];
   modalVisivel: boolean = false;
-  erro = false;
-  mensagemErro = '';
 
   constructor(private tarefaService: TarefaService, public dialog: MatDialog) {}
 
@@ -39,11 +37,10 @@ export class TarefaComponent implements OnInit {
   }
 
   async adicionarTarefa() {
-    if (!this.dono || !this.descricao) return;
-    const result = await this.tarefaService.addTarefa(this.dono, this.descricao);
-    this.carregarTarefas();
-    this.limparCampos();
-    this.modalVisivel = false;
+      const result = await this.tarefaService.addTarefa(this.dono, this.descricao);
+      this.carregarTarefas();
+      this.limparCampos();
+      this.modalVisivel = false;
   }
 
   confirmarRemocao(id: number) {

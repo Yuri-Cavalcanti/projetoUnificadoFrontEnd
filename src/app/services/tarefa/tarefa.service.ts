@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import axios from 'axios';
+import api from '../axios-config';
 
 interface Pessoa{
   id: number,
@@ -17,7 +17,6 @@ interface Tarefa {
   providedIn: 'root'
 })
 export class TarefaService {
-  private apiUrl = 'http://localhost:8080/api/';
   private pathGet = 'pegarTarefa';
   private pathAdd = 'guardarTarefa/save';
   private pathDelete = 'tarefa/delete/';
@@ -26,7 +25,7 @@ export class TarefaService {
 
   async get() : Promise<Tarefa[]>{ // para API sincrona basta retirar o async do meotdo e o await do codigo
     try{
-      const response = await axios.get<Tarefa[]>(this.apiUrl + this.pathGet);
+      const response = await api.get(this.pathGet);
       console.log("Carregadas: ", response.data);
       return response.data;
     }catch (error) {
@@ -43,7 +42,7 @@ export class TarefaService {
     };
 
     try {
-      const response = await axios.post(this.apiUrl + this.pathAdd, tarefaPayload,{headers:{
+      const response = await api.post(this.pathAdd, tarefaPayload,{headers:{
         'content-type':'application/json'
       }});
       console.log("Tarefa adicionada:", response.data);
@@ -56,7 +55,7 @@ export class TarefaService {
 
   async deleteTarefa(id: number) : Promise<number>{
     try{
-       const response = await axios.delete(this.apiUrl + this.pathDelete + id);
+       const response = await api.delete(this.pathDelete + id);
        console.log("Tarefa removida");
        return response.status;
     }catch (error){

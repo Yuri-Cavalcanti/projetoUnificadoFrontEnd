@@ -33,7 +33,6 @@ export class PessoaComponent implements OnInit{
   }
 
   async adicionarPessoa() {
-    if (!this.nome || !this.idade) return;
     await this.pessoaService.add(this.nome, this.idade);
     this.carregarPessoas();
     this.limparCampos();
